@@ -14,13 +14,13 @@ describe('isPasswordAllowed only allows some passwords', () => {
     'ABCdef123',
   ]
 
-  allowedPasswords.forEach(password => {
+  allowedPasswords.forEach((password) => {
     test(`allows ${password}`, () => {
       expect(isPasswordAllowed(password)).toBe(true)
     })
   })
 
-  disallowedPasswords.forEach(password => {
+  disallowedPasswords.forEach((password) => {
     test(`disallows ${password}`, () => {
       expect(isPasswordAllowed(password)).toBe(false)
     })

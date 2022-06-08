@@ -5,6 +5,14 @@ import cases from 'jest-in-case'
 import {isPasswordAllowed} from '../auth'
 
 function casify(obj) {
+  console.log('casifying')
+  console.log(
+    Object.entries(obj).map(([name, password]) => ({
+      name: `${password} - ${name}`,
+      password,
+    })),
+  )
+
   return Object.entries(obj).map(([name, password]) => ({
     name: `${password} - ${name}`,
     password,

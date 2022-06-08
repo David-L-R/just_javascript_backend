@@ -1,21 +1,43 @@
 // Testing Pure Functions
+// 💯 improved titles for jest-in-case
 
-// 💣 remove this todo test (it's only here so you don't get an error about missing tests)
-test.todo('remove me')
+import cases from 'jest-in-case'
+import {isPasswordAllowed} from '../auth'
 
-// 🐨 import the function that we're testing
-// 💰 import {isPasswordAllowed} from '../auth'
+function casify(obj) {
+  console.log('casifying')
+  console.log(
+    Object.entries(obj).map(([name, password]) => ({
+      name: `${password} - ${name}`,
+      password,
+    })),
+  )
 
-// 🐨 write tests for valid and invalid passwords
-// 💰 here are some you can use:
-//
-// valid:
-// - !aBc123
-//
-// invalid:
-// - a2c! // too short
-// - 123456! // no alphabet characters
-// - ABCdef! // no numbers
-// - abc123! // no uppercase letters
-// - ABC123! // no lowercase letters
-// - ABCdef123 // no non-alphanumeric characters
+  return Object.entries(obj).map(([name, password]) => ({
+    name: `${password} - ${name}`,
+    password,
+  }))
+}
+
+cases(
+  'isPasswordAllowed: valid passwords',
+  ({password}) => {
+    expect(isPasswordAllowed(password)).toBe(true)
+  },
+  casify({'valid password': '!aBc123'}),
+)
+
+cases(
+  'isPasswordAllowed: invalid passwords',
+  ({password}) => {
+    expect(isPasswordAllowed(password)).toBe(false)
+  },
+  casify({
+    'too short': 'a2c!',
+    'no letters': '123456!',
+    'no numbers': 'ABCdef!',
+    'no uppercase letters': 'abc123!',
+    'no lowercase letters': 'ABC123!',
+    'no non-alphanumeric characters': 'ABCdef123',
+  }),
+)
